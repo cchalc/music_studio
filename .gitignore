@@ -49,3 +49,6 @@ npm-debug.log
 !.env.example
 /.direnv/
 
+# jj (Jujutsu) colocated VCS working data — git stays authoritative for GitHub.
+/.jj/
+

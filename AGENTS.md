@@ -53,6 +53,17 @@ holds only what is always true.
   so worktree tools copy it into each new worktree (a fresh worktree has only tracked
   files, so the secret would otherwise be missing and the server won't boot).
 
+## Version control
+
+- **jj (Jujutsu) is the primary local VCS**, colocated with git; **git stays
+  authoritative for GitHub**. Publish with `jj git push` (plain `git push` also works).
+  `.jj/` is git-ignored. Fetch with `jj git fetch`; `main` tracks `main@origin`.
+- Use **`wt` (worktrunk)** for parallel worktrees — default config, no committed
+  `.config/wt.toml`. Each worktree honors `PORT` (see Local development), and
+  `.worktreeinclude` copies `config/dev.secret.exs` into new worktrees.
+- This app is a git **submodule** of the `Tristan` project repo; when you advance it,
+  bump the submodule pointer in `Tristan`. See the project-level `CLAUDE.md`.
+
 ## Commit messages
 
 - Describe *what changed and why*. Subject in the imperative mood, ≤72 characters.
