@@ -1,0 +1,72 @@
+# MusicStudio
+
+Marketing website for an independent music teacher / studio, built with Phoenix.
+
+Task-specific framework guidance lives in `.claude/skills/` (mirrored to
+`.agents/skills/`). Each skill loads automatically when its triggers match the work
+you're doing — read the relevant one before writing code in that area. This file
+holds only what is always true.
+
+## Product scope
+
+- **In scope now:** public marketing pages (home, about, lessons, contact) and a
+  **leads** contact/inquiry form that captures prospective students.
+- **Planned, later phases (out of scope for now):** billing/payments, lesson
+  calendar & scheduling, marketing automation / newsletter, and web analytics.
+  Do not scaffold these until their phase — see the project repo's `docs/phases.md`.
+
+## Stack
+
+- **Language/runtime:** Elixir 1.18.4 on Erlang/OTP 28, pinned in `.tool-versions`
+  and managed by **mise** (mise is authoritative here; run `mix` under mise).
+- **Framework:** Phoenix 1.8, Phoenix LiveView 1.2, Bandit HTTP server.
+- **Database:** PostgreSQL via Ecto (`ecto_sql`, `postgrex`).
+- **CSS:** Tailwind CSS v4 (no `tailwind.config.js`); daisyUI is available but prefer
+  hand-written Tailwind components. Assets bundled by esbuild + `tailwind`.
+- **HTTP client:** `Req` — **avoid** `:httpoison`, `:tesla`, and `:httpc`.
+- **Email:** Swoosh. **i18n:** gettext.
+- **Modules:** app module `MusicStudio`, web module `MusicStudioWeb`.
+
+## Commands
+
+- `mix setup` — fetch deps, create+migrate+seed the DB, install/build assets.
+- `mix phx.server` — start the app (http://localhost:4000). Honors `PORT`.
+- `mix test` — run the test suite.
+- `mix precommit` — the gate: `compile --warnings-as-errors`, `skills.check`,
+  `deps.unlock --unused`, `format`, `gettext.extract --check-up-to-date`,
+  `credo --strict`, `sobelow`, `test`. Must exit 0 before work is done.
+
+## Verification
+
+- Write tests for new behavior (see the `phoenix-liveview` skill for LiveView tests).
+- Run `mix precommit` and fix anything it reports; it must exit 0.
+- Exercise UI changes in a browser, not just in tests.
+
+## Local development
+
+- Bootstrap a fresh checkout with `mix setup`.
+- **Parallel worktrees:** override the port, e.g. `PORT=4001 mix phx.server`, so
+  multiple worktrees can run at once.
+- **Local secrets** live in `config/dev.secret.exs` (git-ignored). Copy the committed
+  template `config/dev.secret.example.exs` to `config/dev.secret.exs` and fill in
+  values; `config/dev.exs` imports it if present. `.worktreeinclude` lists this file
+  so worktree tools copy it into each new worktree (a fresh worktree has only tracked
+  files, so the secret would otherwise be missing and the server won't boot).
+
+## Commit messages
+
+- Describe *what changed and why*. Subject in the imperative mood, ≤72 characters.
+- The body explains the *why*, not a restatement of the diff.
+
+## AI attribution
+
+- End agent-written commit bodies with a `Co-Authored-By:` trailer naming the model,
+  e.g. `Co-Authored-By: Claude <noreply@anthropic.com>`.
+
+## Skills
+
+- **elixir-gotchas** — Elixir language traps, Mix task usage, ExUnit test mechanics.
+- **phoenix-foundations** — Ecto, router scoping, HEEx syntax, form handling.
+- **phoenix-liveview** — streams, JS hooks & colocated hooks, push_event, LiveView tests.
+- **ui-and-assets** — layout/component conventions, Tailwind v4, bundling, design.
+- **liveview-interactions** — deciding client (`JS` commands) vs server (`handle_event`).
